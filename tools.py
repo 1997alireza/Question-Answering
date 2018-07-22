@@ -1,13 +1,25 @@
 def euclidean_distance(str1, str2):
+    words1 = str1.split(' ')
+    words2 = str2.split(' ')
+    set1 = set(words1)
+    set2_minus1 = set(words2) - set1
     s = 0
-    for i in range(0, min(len(str1), len(str2))):
-        s += (ord(str1[i])-ord(str2[i]))**2
-    if len(str1) > len(str2):
-        for i in range(len(str2), len(str1)):
-            s += ord(str1[i])**2
-    else:
-        for i in range(len(str1), len(str2)):
-            s += ord(str2[i])**2
+    for word in set1:
+        s1 = 0
+        s2 = 0
+        for w in words1:
+            if w == word:
+                s1 = s1+1
+        for w in words2:
+            if w == word:
+                s2 = s2+1
+        s = s + (s2-s1)**2
+    for word in set2_minus1:
+        s2 = 0
+        for w in words2:
+            if word == w:
+                s2 = s2+1
+        s = s + s2**2
     return s**(1/2.0)
 
 
@@ -44,7 +56,7 @@ def find_best_match(sheet, q_col, question, distance_function=euclidean_distance
             best_score = ed
             best_index = row
     # print(best_index)
-    return best_index
+    return best_index, best_score
 
 
 
