@@ -4,6 +4,7 @@ from org.apache.lucene.index import IndexWriterConfig, IndexWriter, FieldInfo, I
 from org.apache.lucene.document import Document, Field, FieldType
 from org.apache.lucene.store import SimpleFSDirectory
 from org.apache.lucene.analysis.standard import StandardAnalyzer
+from org.apache.lucene.analysis.fa import PersianAnalyzer
 from xlrd import open_workbook
 
 wb = open_workbook('./QA-samples.xlsx')
@@ -19,7 +20,8 @@ question_field = 'question'
 answer_field = 'answer'
 
 index_store = SimpleFSDirectory(index_path)
-analyzer = StandardAnalyzer()
+# analyzer = StandardAnalyzer()
+analyzer = PersianAnalyzer()
 config = IndexWriterConfig(analyzer)
 config.setOpenMode(IndexWriterConfig.OpenMode.CREATE)
 writer = IndexWriter(index_store, config)
@@ -38,6 +40,7 @@ qft.setIndexOptions(IndexOptions.DOCS_AND_FREQS)
 aft = FieldType()
 # aft.setIndexed(False)  # todo
 aft.setStored(True)
+writer.deleteAll()
 for row in range(1, sheet1.nrows):
     doc = Document()
     row_q = str(sheet1.cell(row, 0).value)
@@ -47,3 +50,4 @@ for row in range(1, sheet1.nrows):
     writer.addDocument(doc)
 writer.commit()
 writer.close()
+print('indexing completed')

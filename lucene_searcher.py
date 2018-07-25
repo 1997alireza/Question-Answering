@@ -13,16 +13,17 @@ answer_field = 'answer'
 directory = SimpleFSDirectory(index_path)
 searcher = IndexSearcher(DirectoryReader.open(directory))
 
-qtq = TermQuery(Term(question_field, input_q))
 query_builder = BooleanQuery.Builder()
-query = query_builder\
-    .add(BooleanClause(qtq, BooleanClause.Occur.SHOULD))\
-    .build()
+for q_word in input_q.split(' '):
+    qtq = TermQuery(Term(question_field, q_word))
+    query_builder\
+        .add(BooleanClause(qtq, BooleanClause.Occur.SHOULD))
+query = query_builder.build()
 top_n = 5
 scoreDocs = searcher.search(query, top_n).scoreDocs
 print('found nums: ', len(scoreDocs))
 for scoreDoc in scoreDocs:
     doc = searcher.doc(scoreDoc.doc)
-    print('Best Math: ', doc.get(question_field))
+    print('Best Math: ', doc.get(question_field), '\n')
     print('Answer: ', doc.get(answer_field))
     print('---------------------\n')
