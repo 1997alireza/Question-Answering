@@ -49,7 +49,7 @@ def edit_distance(str1, str2):
 def find_best_match(sheet, q_col, question, distance_function=euclidean_distance):
     best_index = 0
     best_score = distance_function(question, str(sheet.cell(0, q_col).value))
-    for row in range(1, sheet.nrows):
+    for row in range(0, sheet.nrows):
         q = str(sheet.cell(row, q_col).value)
         ed = distance_function(question, q)
         if best_score > ed:
@@ -57,6 +57,3 @@ def find_best_match(sheet, q_col, question, distance_function=euclidean_distance
             best_index = row
     # print(best_index)
     return best_index, best_score
-
-
-

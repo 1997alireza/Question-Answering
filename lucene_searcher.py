@@ -4,7 +4,7 @@ from org.apache.lucene.store import SimpleFSDirectory
 from org.apache.lucene.search import IndexSearcher, BooleanClause, BooleanQuery, TermQuery
 from org.apache.lucene.index import DirectoryReader, Term
 
-input_q = input()
+input_q = input().replace('ی', 'ي')
 lucene.initVM()
 index_path = Paths.get('./lucene.index')
 question_field = 'question'

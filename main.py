@@ -2,7 +2,7 @@ from tools import euclidean_distance, edit_distance, find_best_match
 from xlrd import open_workbook
 
 
-input_q = input()
+input_q = input().replace('ی', 'ي')
 wb = open_workbook('./QA-samples.xlsx')
 sheet = wb.sheet_by_index(1)
 q_col = 0
