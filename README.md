@@ -1,5 +1,5 @@
 # Question-Answering
-Simple QA methods
+Methods to identify similarities
 
 1. Euclidean Distance
 2. Edit Distance
